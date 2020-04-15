@@ -1,37 +1,41 @@
-import React, { Component } from 'react';
-import MenuModel from '../../models/menuModel';
-import './menu.css';
+import React, { Component } from 'react'
 
 
 export default class Menu extends Component {
-    state ={
-        menuList: []
-    }
+    state = {
 
-    async componentDidMount(){
-        let fetchedMenu  = await MenuModel.getAll();
-        console.log(fetchedMenu);
+        review: false,
+      };
+      
+
+      onReviewBtnClick = () => {
         this.setState({
-            menuList: fetchedMenu
+          review: !this.state.review,
         });
-    }
+      };
+
+
     render() {
-        let menu = new MenuModel();
-        
-
+        let reviewForm = '';
+        if (this.state.review) {
+          reviewForm = (
+            <form onSubmit="onReviewSubmit">
+              <textarea placeholder="your comment" />
+              <button className="btn btn-secondary" type="submit">Add</button>
+            </form>
+          );
+        }
         return (
-            <div className="menu-list">
-
-
-                <div className="menu-item card">
-                    <img src={menu.imgUrl} />
-                    <h4>{menu.name}</h4>
-                    <h4>Price: ${menu.price}</h4>
-                    <h4>Calories: {menu.calories} cal</h4>
-                    <h4>Reviews: {menu.reviews}</h4>
-                    <h4>Rating: {menu.rating}</h4>
-                </div>
-            </div>
+            <div key={this.props.menu._id} className="menu-item card">
+            <img src={this.props.menu.imgUrl} />
+            <h4>{this.props.menu.name}</h4>
+            <h4>Price: ${this.props.menu.price}</h4>
+            <h4>Calories: {this.props.menu.calories} cal</h4>
+            <h4>Reviews: {this.props.menu.reviews}</h4>
+            <h4>Rating: {this.props.menu.rating}</h4>
+            <button className="btn btn-primary" onClick={() => this.onReviewBtnClick()}>Review</button>
+            {reviewForm}
+          </div>
         )
     }
 }
