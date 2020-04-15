@@ -11,17 +11,15 @@ import Login from './components/user/login';
 import Register from './components/user/register';
 import Home from './components/home/home';
 import MenuList from './components/menu/menuList';
+import Admin from './components/admin/admin';
 import User from './models/user';
 import axios from 'axios';
 import Menu from './components/menu/menu';
 
-
-
 class App extends React.Component {
   state = {
-    user: { name: '', email: '', password: '' }
-  }
-
+    user: { name: '', email: '', password: '' },
+  };
 
   onRegisterInputChange = (event) => {
     console.log(event.target);
@@ -31,8 +29,8 @@ class App extends React.Component {
     let userCopy = { ...this.state.user };
     userCopy[name] = value;
     this.setState({
-      user: userCopy
-    })
+      user: userCopy,
+    });
   };
 
   onRegisterFormSubmit = async (e) => {
@@ -45,18 +43,17 @@ class App extends React.Component {
     let uri = axios.defaults.baseURL + '/users';
     let response = await axios.post(uri, newUser);
     console.log(response.data);
-
-  }
+  };
 
   render() {
     return (
       <div className="App container">
         {/* <Main/> */}
         <Router>
-          <div>
+                  <div>
             <div className="navbar bg-primary">
-              <NavLink to="/home" activeStyle={{ color: 'green' }}>
-                Home
+              <NavLink to="/admin" activeStyle={{ color: 'green' }}>
+                Admin
               </NavLink>
               <NavLink to="/menu" activeStyle={{ color: 'green' }}>
                 Menu
