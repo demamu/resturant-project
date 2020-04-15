@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Login() {
+ const Login = (props) => {
     return (
         <div>
             <h1>Login</h1>
@@ -11,3 +11,5 @@ export default function Login() {
         </div>
     )
 }
+
+export default Login

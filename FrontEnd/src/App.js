@@ -13,13 +13,14 @@ import Home from './components/home/home';
 import MenuList from './components/menu/menuList';
 import User from './models/user';
 import axios from 'axios';
+import Menu from './components/menu/menu';
 
 
 
 class App extends React.Component {
-state ={
-  user: {name: '', email: '', password:''}
-}
+  state = {
+    user: { name: '', email: '', password: '' }
+  }
 
 
   onRegisterInputChange = (event) => {
@@ -27,8 +28,8 @@ state ={
     let name = event.target.name;
     let value = event.target.value;
 
-    let userCopy = {...this.state.user};
-    userCopy[name] =value;
+    let userCopy = { ...this.state.user };
+    userCopy[name] = value;
     this.setState({
       user: userCopy
     })
@@ -71,13 +72,21 @@ state ={
               </NavLink>
             </div>
             <Switch>
-              <Route path="/home" exact component={Home} />
-              <Route path="/menu" exact component={MenuList} />
-              <Route path="/login" exact component={Login} />
-              <Route path="/logout" exact component={Home} />
+              <Route path="/home" exact>
+                <Home user={this.state.user} />
+              </Route>
+              <Route path="/menu" exact >
+                <MenuList user={this.state.user} />
+              </Route>
+              <Route path="/login" exact >
+                <Login user={this.state.user} />
+              </Route>
               <Route path="/register" exact>
-                <Register onRegisterInputChange={this.onRegisterInputChange}
-                onRegisterFormSubmit={this.onRegisterFormSubmit} user={this.state.user} />
+                <Register
+
+                  onRegisterInputChange={this.onRegisterInputChange}
+                  onRegisterFormSubmit={this.onRegisterFormSubmit}
+                  user={this.state.user} />
               </Route>
             </Switch>
           </div>
