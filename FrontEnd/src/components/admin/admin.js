@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MenuModel from '../../models/menuModel';
-import './menu.css';
+//import './menu.css';
 
 export default class Admin extends Component {
   state = {
