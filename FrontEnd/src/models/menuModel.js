@@ -44,3 +44,4 @@ export default class MenuModel {
     return response.data;
   }
 }
+ 
