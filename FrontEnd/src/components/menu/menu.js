@@ -1,17 +1,39 @@
 import React, { Component } from 'react'
+import MenuModel from '../../models/menuModel';
 
 
 export default class Menu extends Component {
     state = {
-
+        menuReview: '',
         review: false,
       };
       
-
-      onReviewBtnClick = () => {
+      onInputChange = (event)=> {
+          let name = event.target.name;
+          let value = event.target.value;
+          this.setState({
+              [name]:value
+          });
+      }
+      onReviewBtnClick = (event) => {
         this.setState({
           review: !this.state.review,
         });
+
+      };
+      onAddBtnClick =async (event, menuId) => {
+          event.preventDefault();
+    
+          let foundMenu = await MenuModel.getById(menuId);
+          foundMenu.review = this.state.menuReview;
+          let response = await MenuModel.update(menuId, foundMenu);
+          console.log(response)
+
+        alert('success')
+        this.setState({
+          review: !this.state.review,
+        });
+
       };
 
 
@@ -19,9 +41,9 @@ export default class Menu extends Component {
         let reviewForm = '';
         if (this.state.review) {
           reviewForm = (
-            <form onSubmit="onReviewSubmit">
-              <textarea placeholder="your comment" />
-              <button className="btn btn-secondary" type="submit">Add</button>
+            <form >
+              <textarea placeholder="your comment" value={this.state.reviewInput} name="menuReview" onChange={(event) => this.onInputChange(event)} />
+              <button className="btn btn-secondary" onClick={(event) => this.onAddBtnClick(event, this.props.menu._id)} >Add</button>
             </form>
           );
         }
