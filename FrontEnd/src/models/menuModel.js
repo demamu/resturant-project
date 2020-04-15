@@ -1,13 +1,15 @@
 import axios from 'axios';
+import uuid from 'uuid';
 
 
 export default class MenuModel {
   constructor(name, price, cal, imgUrl, review, rating) {
+    this._id = uuid.v1();
     this.name = name || 'Chicken Frice';
     this.price = price || 4.99;
     this.calories = cal || 345;
     this.imgUrl = imgUrl || 'http://pngimg.com/uploads/burger_sandwich/burger_sandwich_PNG4114.png';
-    this.review = review || 'this is a good meal...';
+    this.review = [];
     this.rating = rating || 4.4;
   }
 
