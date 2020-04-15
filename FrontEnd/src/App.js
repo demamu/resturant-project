@@ -10,7 +10,7 @@ import {
 import Login from './components/user/login';
 import Register from './components/user/register';
 import Home from './components/home/home';
-import Menu from './components/menu/menu';
+import MenuList from './components/menu/menuList';
 import User from './models/user';
 import axios from 'axios';
 
@@ -72,7 +72,7 @@ state ={
             </div>
             <Switch>
               <Route path="/home" exact component={Home} />
-              <Route path="/menu" exact component={Menu} />
+              <Route path="/menu" exact component={MenuList} />
               <Route path="/login" exact component={Login} />
               <Route path="/logout" exact component={Home} />
               <Route path="/register" exact>
