@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 
-export default class Menu {
+export default class MenuModel {
   constructor(name, price, cal, imgUrl, review, rating) {
     this.name = name || 'Chicken Frice';
     this.price = price || 4.99;
     this.calories = cal || 345;
-    this.imgUrl = imgUrl || 'Chicken Frice';
+    this.imgUrl = imgUrl || 'http://pngimg.com/uploads/burger_sandwich/burger_sandwich_PNG4114.png';
     this.review = review || 'this is a good meal...';
     this.rating = rating || 4.4;
   }
