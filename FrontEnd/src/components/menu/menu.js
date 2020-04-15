@@ -9,8 +9,9 @@ export default class Menu extends Component {
     }
 
     async componentDidMount(){
-        let fetchedMenu  = await MenuModel.getAll();
-        console.log(fetchedMenu);
+        // let fetchedMenu  = await MenuModel.getAll();
+        // console.log(fetchedMenu);
+        let fetchedMenu = [new MenuModel(), new MenuModel(), new MenuModel()]
         this.setState({
             menuList: fetchedMenu
         });
