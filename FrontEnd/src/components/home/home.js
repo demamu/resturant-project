@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MenuForm from '../menu/menuForm';
+import AdminForm from '../admin/admin';
 
 export default class Home extends Component {
 
@@ -11,7 +11,7 @@ export default class Home extends Component {
         
         return (
             <div>
-               <MenuForm/>
+               <AdminForm/>
             </div>
         )
     }

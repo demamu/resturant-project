@@ -22,6 +22,22 @@ router.get('/', async (req, res) => {
   }
 });
 
+// @rout   GET api/menu
+// @desc   Get a single user menu
+// @access Public
+
+router.get('/:id', async (req, res) => {
+  try {
+    const menu = await Menu.findById(req.params.id)
+    res.json(menu);
+    
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+
 // @rout   POST api/menu
 // @desc   Add new menu
 // @access Private
@@ -34,10 +50,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-// Make sure user role is Admin
-// if (User.role !== admin) {
-//   return res.status(401).json({msg: 'Not authorized'});
-// }
+
     const { name, price, calories, imageURL } = req.body;
 
     try {
@@ -102,12 +115,7 @@ router.delete('/:id', auth, async (req, res) => {
 
     if (!menu) return res.status(404).json({ msg: 'Menu not found' });
 
-    // // Make sure user role is Admin
-    // if (User.role!== admin) {
-    //   return res.status(401).json({msg: 'Not authorized'});
-    // }
-
-    await Menu.findByIdAndRemove(req.params.id);
+   await Menu.findByIdAndRemove(req.params.id);
 
     res.json({ msg: 'menu removed' });
   } catch (err) {
