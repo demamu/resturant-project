@@ -9,10 +9,10 @@ export default class MenuList extends Component {
   };
 
   async componentDidMount() {
-    // let fetchedMenu = await MenuModel.getAll();
-    // console.log(fetchedMenu);
+    let fetchedMenu = await MenuModel.getAll();
+    console.log(fetchedMenu);
 
-    let fetchedMenu = [new MenuModel(),new MenuModel(),new MenuModel(),new MenuModel()];
+    // let fetchedMenu = [new MenuModel(),new MenuModel(),new MenuModel(),new MenuModel()];
     this.setState({
       menuList: fetchedMenu,
     });
@@ -21,7 +21,7 @@ export default class MenuList extends Component {
   render() {
     let menuListView = '';
 
-    menuListView = this.state.menuList.map((menu) => <Menu menuList={this.state.menuList} menu={menu} key={menu._id} />);
+    menuListView = this.state.menuList.map(m => <Menu menuList={this.state.menuList} menu={m} key={m._id} />);
 
     return <div className="menu-list">{menuListView}</div>;
   }

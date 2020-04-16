@@ -40,19 +40,23 @@ export default class Menu extends Component {
 
   onAddBtnClick = async (event, menuId) => {
     event.preventDefault();
+    console.log(menuId)
+    let foundMenu = await MenuModel.getById(menuId);
+    console.log(foundMenu);
+    console.log(this.props);
 
-    //   let foundMenu = await MenuModel.getById(menuId);
-    let foundMenu = this.props.menuList.findIndex(m => m._id === menuId);
-    if (foundMenu !== -1) {
-      this.props.menuList[foundMenu].review.push(this.state.menuReview);
+    // let foundMenu = this.props.menuList.findIndex(m => m._id === menuId);
+    // if (foundMenu !== -1) {
+    //   this.props.menuList[foundMenu].review.push(this.state.menuReview);
 
-      this.props.menuList[foundMenu].rating = this.state.menuRating;
-    }
+    //   this.props.menuList[foundMenu].rating = this.state.menuRating;
+    // }
 
 
-    //   foundMenu.review = this.state.menuReview;
-    //   let response = await MenuModel.update(menuId, foundMenu);
-    //   console.log(response)
+    foundMenu.reviews.push(this.state.menuReview);
+    foundMenu.ratings.push( this.state.menuRating);
+    let response = await MenuModel.update(menuId, foundMenu);
+    console.log(response)
 
     this.setState({
       review: !this.state.review,
@@ -67,13 +71,14 @@ export default class Menu extends Component {
     let reviewForm = '';
 
     if (this.state.review) {
+      console.log(this.props)
+      if (this.props.menu.review) {
+        prevReview = this.props.menu.review.map(rev => <div className='review'>
+          <p>Review: <small>{rev}</small></p>
+          <p>Rating: <strong>{this.props.menu.rating}</strong></p>
 
-      prevReview = this.props.menu.review.map(rev => <div className='review'>
-        <p>Review: <small>{rev}</small></p>
-        <p>Rating: <strong>{this.props.menu.rating}</strong></p>
-
-      </div>);
-
+        </div>);
+      }
 
       reviewForm = (
         <form >
