@@ -29,6 +29,7 @@ export default class MenuModel {
 
   static async getById(id){
     let uri = axios.defaults.baseURL + '/menu/' + id;
+    console.log(uri)
     let response = await axios.get(uri);
     console.log(response);
     return response.data;
@@ -46,3 +47,4 @@ export default class MenuModel {
     return response.data;
   }
 }
+ 

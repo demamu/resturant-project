@@ -43,6 +43,8 @@ router.post(
         password,
       });
 
+      console.log('user: ', user);
+
       const salt = await bcrypt.genSalt(10);
 
       user.password = await bcrypt.hash(password, salt);
@@ -64,7 +66,7 @@ router.post(
         },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.json({ token: token , user: user});
         }
       );
 
