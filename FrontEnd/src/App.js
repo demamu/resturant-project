@@ -14,6 +14,7 @@ import MenuList from './components/menu/menuList';
 import Admin from './components/admin/admin';
 import User from './models/user';
 import axios from 'axios';
+import Menu from './components/menu/menu';
 
 class App extends React.Component {
   state = {
@@ -68,16 +69,21 @@ class App extends React.Component {
               </NavLink>
             </div>
             <Switch>
-              <Route path="/admin" exact component={Admin} />
-              <Route path="/menu" exact component={MenuList} />
-              <Route path="/login" exact component={Login} />
-              <Route path="/logout" exact component={Home} />
+              <Route path="/home" exact>
+                <Home user={this.state.user} />
+              </Route>
+              <Route path="/menu" exact >
+                <MenuList user={this.state.user} />
+              </Route>
+              <Route path="/login" exact >
+                <Login user={this.state.user} />
+              </Route>
               <Route path="/register" exact>
                 <Register
+
                   onRegisterInputChange={this.onRegisterInputChange}
                   onRegisterFormSubmit={this.onRegisterFormSubmit}
-                  user={this.state.user}
-                />
+                  user={this.state.user} />
               </Route>
             </Switch>
           </div>

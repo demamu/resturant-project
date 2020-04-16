@@ -4,7 +4,7 @@ import uuid from 'uuid';
 
 export default class MenuModel {
   constructor(name, price, cal, imgUrl, review, rating) {
-    this._id = uuid.v1();
+    // this._id = uuid.v1();
     this.name = name || 'Chicken Frice';
     this.price = price || 4.99;
     this.calories = cal || 345;
