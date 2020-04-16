@@ -28,7 +28,9 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const menu = await Menu.findById(req.params.id)
+    console.log(req.params)
+    const menu = await Menu.findById(req.params.id);
+    console.log(menu)
     res.json(menu);
     
   } catch (err) {
@@ -51,15 +53,16 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, price, calories, imageURL } = req.body;
+    const { name, price, calories, imgUrl, reviews, ratings } = req.body;
 
     try {
       const newMenu = new Menu({
         name,
         price,
         calories,
-        imageURL,
-        
+        imgUrl,
+        reviews,
+        ratings
       });
 
       const menu = await newMenu.save();
@@ -76,15 +79,20 @@ router.post(
 // @desc   Update menu
 // @access Private
 
-router.put('/:id', auth, async (req, res) => {
-  const { name, price, calories, imageURL } = req.body;
+router.put('/:id', async (req, res) => {
+  const { name, price, calories, imgUrl, reviews, ratings } = req.body;
+
 
   // Build menu object
   const menuFields = {};
   if (name) menuFields.name = name;
   if (price) menuFields.price = price;
   if (calories) menuFields.calories = calories;
-  if (imageURL) menuFields.imageURL = imageURL;
+  if (imgUrl) menuFields.imgUrl = imgUrl;
+  if (reviews) menuFields.reviews = reviews;
+  if (ratings) menuFields.ratings = ratings;
+
+  console.log('menuFields ;', menuFields)
   
 
   try {

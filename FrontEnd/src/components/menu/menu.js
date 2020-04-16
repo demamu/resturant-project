@@ -3,8 +3,10 @@ import MenuModel from '../../models/menuModel';
 
 export default class Menu extends Component {
   state = {
+    menu : this.props.menu,
     menuReview: '',
-    review: false,
+    menuRating: 5,
+    showReview: false,
   };
 
   onInputChange = (event) => {
@@ -14,149 +16,104 @@ export default class Menu extends Component {
       [name]: value,
     });
   };
+
   onReviewBtnClick = (event) => {
     this.setState({
-      review: !this.state.review,
+      showReview: !this.state.showReview,
     });
   };
+
+
+  onInputChange = (event) => {
+    let name = event.target.name;
+    let value = event.target.value;
+  
+    this.setState({
+      [name]: value
+    });
+
+  }
+
+  onReviewBtnClick = (event) => {
+    this.setState({
+      showReview: !this.state.showReview,
+    });
+
+  };
+
   onAddBtnClick = async (event, menuId) => {
     event.preventDefault();
+    console.log(menuId)
 
     let foundMenu = await MenuModel.getById(menuId);
-    foundMenu.review = this.state.menuReview;
-    let response = await MenuModel.update(menuId, foundMenu);
-    console.log(response);
-    state = {
-        menuReview: '',
-        menuRating: 5,
-        review: false,
-    };
+    console.log("foundMenu..........", foundMenu);
+    console.log(this.props);
 
-    onInputChange = (event) => {
-        let name = event.target.name;
-        let value = event.target.value;
-        this.setState({
-            [name]: value
-        });
+    foundMenu.reviews.push(this.state.menuReview);
+    foundMenu.ratings.push( this.state.menuRating);
+    
+    let response = await MenuModel.update(menuId, foundMenu);
+    console.log("response, ", response)
+
+
+    this.setState({
+      showReview: !this.state.showReview,
+      menu: response
+    });
+
+  }
+
+  componentDidUpdate(){
+    console.log(this.state)
+  }
+
+  render() {
+    let prevReview = '';
+    let reviewForm = '';
+    let avgRating = 0;
+    let ratings = this.state.menu.ratings;
+        
+    if(ratings.length > 0){
+      let totalRating = ratings.reduce((item, accumulator) => (accumulator + Number(item)))
+      avgRating = totalRating/ratings.length;
     }
 
-    onReviewBtnClick = (event) => {
-        this.setState({
-            review: !this.state.review,
-        });
+    if (this.state.showReview) {     
+        prevReview = this.state.menu.reviews.map((rev,index) => <div className='review' key={index}>
+          <p>Review: <small>{rev}</small></p>
+          <p>Rating: <strong>{avgRating.toFixed(1)}</strong></p>
 
-    };
+        </div>);
+      
 
-    onAddBtnClick = async (event, menuId) => {
-        event.preventDefault();
+      reviewForm = (
+        <form >
+          <label>Your review: </label>
+          <textarea className="form-control"
+            placeholder="your comment" value={this.state.reviewInput} name="menuReview" onChange={(event) => this.onInputChange(event)} />
 
-        //   let foundMenu = await MenuModel.getById(menuId);
-        let foundMenu = this.props.menuList.findIndex(m => m._id === menuId);
-        if (foundMenu !== -1) {
-            this.props.menuList[foundMenu].review.push(this.state.menuReview);
+          <label>Rating: </label>
+          <input
+            className="form-control"
+            type="number" min="1" max="5" value={this.state.menuRating} name="menuRating"
+            onChange={(event) => this.onInputChange(event)} />
 
-            this.props.menuList[foundMenu].rating = this.state.menuRating;
-        }
-
-
-        //   foundMenu.review = this.state.menuReview;
-        //   let response = await MenuModel.update(menuId, foundMenu);
-        //   console.log(response)
-
-        this.setState({
-            review: !this.state.review,
-        });
-
-    };
-
-    // alert('success');
-    this.setState({
-      review: !this.state.review,
-    });
-  };
-
-  // render() {
-  //   let reviewForm = '';
-  //   if (this.state.review) {
-  //     reviewForm = (
-  //       <form>
-  //         <textarea
-  //           placeholder="your comment"
-  //           value={this.state.reviewInput}
-  //           name="menuReview"
-  //           onChange={(event) => this.onInputChange(event)}
-  //         />
-  //         <button
-  //           className="btn btn-secondary"
-  //           onClick={(event) => this.onAddBtnClick(event, this.props.menu._id)}
-  //         >
-  //           Add
-  //         </button>
-  //       </form>
-  //     );
-
-    render() {
-        let prevReview = '';
-
-
-        let reviewForm = '';
-
-        if (this.state.review) {
-
-            prevReview = this.props.menu.review.map(rev => <div className='review'>
-               <p>Review: <small>{rev}</small></p> 
-               <p>Rating: <strong>{this.props.menu.rating}</strong></p>
-        
-            </div>);
-
-
-            reviewForm = (
-                <form >
-                    <label>Your review: </label>
-                    <textarea className="form-control"
-                    placeholder="your comment" value={this.state.reviewInput} name="menuReview" onChange={(event) => this.onInputChange(event)} />
-
-                    <label>Rating: </label>
-                    <input
-                    className="form-control"
-                     type="number" min="1" max="5" value={this.state.menuRating} name="menuRating"
-                        onChange={(event) => this.onInputChange(event)} />
-
-                    <button className="btn btn-secondary" onClick={(event) => this.onAddBtnClick(event, this.props.menu._id)} >Add</button>
-                </form>
-            );
-        }
-        return (
-            <div key={this.props.menu._id} className="menu-item card">
-                <img src={this.props.menu.imgUrl} />
-                <h4>{this.props.menu.name}</h4>
-                <h4>Price: ${this.props.menu.price}</h4>
-                <h4>Calories: {this.props.menu.calories} cal</h4>
-                <h4>Reviews: {this.props.menu.reviews}</h4>
-                <h4>Rating: {this.props.menu.rating}</h4>
-                <button className="btn btn-primary" onClick={() => this.onReviewBtnClick()}>Review</button>
-
-                {prevReview}
-                {reviewForm}
-            </div>
-        )
+          <button className="btn btn-secondary" onClick={(event) => this.onAddBtnClick(event, this.state.menu._id)} >Add</button>
+        </form>
+      );
     }
     return (
-      <div key={this.props.menu._id} className="menu-item card">
-        <img src={this.props.menu.imgUrl} />
-        <h4>{this.props.menu.name}</h4>
-        <h4>Price: ${this.props.menu.price}</h4>
-        <h4>Calories: {this.props.menu.calories} cal</h4>
-        <h4>Reviews: {this.props.menu.reviews}</h4>
-        <h4>Rating: {this.props.menu.rating}</h4>
-        <button
-          className="btn btn-primary"
-          onClick={() => this.onReviewBtnClick()}
-        >
-          Review
-        </button>
+      <div key={this.state.menu._id} className="menu-item card">
+        <img src={this.state.menu.imgUrl} />
+        <h4>{this.state.menu.name}</h4>
+        <h4>Price: ${this.state.menu.price}</h4>
+        <h4>Calories: {this.state.menu.calories} cal</h4>
+        <h4>Rating: {avgRating.toFixed(1)}</h4>
+        <button className="btn btn-primary" onClick={() => this.onReviewBtnClick()}>Review</button>
+
+        {prevReview}
         {reviewForm}
       </div>
-    );
+    )
   }
 }
