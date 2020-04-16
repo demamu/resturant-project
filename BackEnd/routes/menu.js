@@ -28,7 +28,9 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const menu = await Menu.findById(req.params.id)
+    console.log(req.params)
+    const menu = await Menu.findById(req.params.id);
+    console.log(menu)
     res.json(menu);
     
   } catch (err) {
@@ -76,7 +78,7 @@ router.post(
 // @desc   Update menu
 // @access Private
 
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id', async (req, res) => {
   const { name, price, calories, imageURL } = req.body;
 
   // Build menu object
