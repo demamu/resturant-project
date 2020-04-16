@@ -16,8 +16,8 @@ export default class Admin extends Component {
   }
   render() {
     let menuListView = '';
-    menuListView = this.state.menuList.map((menu) => (
-      <div className="menu-item card">
+    menuListView = this.state.menuList.map((menu, index) => (
+      <div key={index} className="menu-item card">
         <img src={menu.imgUrl} />
         <h4>{menu.name}</h4>
         <h4>Price: ${menu.price}</h4>
