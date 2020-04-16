@@ -62,47 +62,41 @@ componentDidUpdate(){
         {/* <Main/> */}
         <Router>
           <div>
-            <div className="navbar bg-primary">
-              <NavLink to="/admin" activeStyle={{ color: 'green' }}>
+            <div >
+              {/* <NavLink to="/admin" activeStyle={{ color: 'green' }}>
                 Admin
               </NavLink>
               <NavLink to="/" activeStyle={{ color: 'green' }}>
                 Home
-              </NavLink>
-              <NavLink to="/login" activeStyle={{ color: 'green' }}>
+              </NavLink> */}
+              {/* <NavLink to="/login" activeStyle={{ color: 'green' }}>
                 LogIn
               </NavLink>
               <NavLink to="/register" activeStyle={{ color: 'green' }}>
                 Register
-              </NavLink>
+              </NavLink> */}
             </div>
             <Switch>
-              <Route path="/admin" exact>
-                <Admin
-                  user={this.state.user}
-                  loggedUser={this.state.loggedUser}
-                />
-              </Route>
               <Route path="/" exact>
-                <MenuList
-                  user={this.state.user}
+                <Home
                   loggedUser={this.state.loggedUser}
                 />
               </Route>
-              <Route path="/login" exact>
+              
+              {/* <Route path="/login" exact>
                 <Login
                   user={this.state.user}
                   loggedUser={this.state.loggedUser}
                 />
-              </Route>
-              <Route path="/register" exact>
+              </Route> */}
+              {/* <Route path="/register" exact>
                 <Register
                   onRegisterInputChange={this.onRegisterInputChange}
                   onRegisterFormSubmit={this.onRegisterFormSubmit}
                   user={this.state.user}
                   loggedUser={this.state.loggedUser}
                 />
-              </Route>
+              </Route> */}
             </Switch>
           </div>
         </Router>

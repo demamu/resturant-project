@@ -8,6 +8,7 @@ import React from 'react'
             <input type="text"/>
             <label>Password</label>
             <input type="password"/>
+            <button onClick={()=> {props.onUserLogin()}}>Login</button>
         </div>
     )
 }

@@ -9,24 +9,13 @@ export default class Menu extends Component {
     showReview: false,
   };
 
-  onInputChange = (event) => {
-    let name = event.target.name;
-    let value = event.target.value;
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  onReviewBtnClick = (event) => {
-    this.setState({
-      showReview: !this.state.showReview,
-    });
-  };
-
 
   onInputChange = (event) => {
     let name = event.target.name;
     let value = event.target.value;
+    if(name === 'menuRating'){
+      value = parseInt(value);
+    }
   
     this.setState({
       [name]: value
@@ -72,10 +61,12 @@ export default class Menu extends Component {
     let reviewForm = '';
     let avgRating = 0;
     let ratings = this.state.menu.ratings;
+    let n = ratings.length;
         
-    if(ratings.length > 0){
-      let totalRating = ratings.reduce((item, accumulator) => (accumulator + Number(item)))
-      avgRating = totalRating/ratings.length;
+    if(n > 0){
+      let totalRating = ratings.reduce((item, total) => (total + item))
+      console.log('total: ', totalRating)
+      avgRating = totalRating/n;
     }
 
     if (this.state.showReview) {     
