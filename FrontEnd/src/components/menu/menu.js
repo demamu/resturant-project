@@ -69,31 +69,32 @@ export default class Menu extends Component {
 
     };
 
-    alert('success');
+    // alert('success');
     this.setState({
       review: !this.state.review,
     });
   };
 
-  render() {
-    let reviewForm = '';
-    if (this.state.review) {
-      reviewForm = (
-        <form>
-          <textarea
-            placeholder="your comment"
-            value={this.state.reviewInput}
-            name="menuReview"
-            onChange={(event) => this.onInputChange(event)}
-          />
-          <button
-            className="btn btn-secondary"
-            onClick={(event) => this.onAddBtnClick(event, this.props.menu._id)}
-          >
-            Add
-          </button>
-        </form>
-      );
+  // render() {
+  //   let reviewForm = '';
+  //   if (this.state.review) {
+  //     reviewForm = (
+  //       <form>
+  //         <textarea
+  //           placeholder="your comment"
+  //           value={this.state.reviewInput}
+  //           name="menuReview"
+  //           onChange={(event) => this.onInputChange(event)}
+  //         />
+  //         <button
+  //           className="btn btn-secondary"
+  //           onClick={(event) => this.onAddBtnClick(event, this.props.menu._id)}
+  //         >
+  //           Add
+  //         </button>
+  //       </form>
+  //     );
+
     render() {
         let prevReview = '';
 
